@@ -1,0 +1,129 @@
+// state of game +
+// list areas in the city +
+// for each area +: 
+//    name +
+//    max cubes in area +
+//    for each player: +
+//        numbers of cubes in area
+// points for each player +
+// amount of tokens in this turn for each player +
+// each player descions in last turn +
+// 
+
+public enum State {
+	Finished, 
+	Inprogress
+}
+
+
+public class Board {
+	private static Map<AreaName, AreaInfo> areas;
+
+	private static  Map<Choice,ChoiceInfo> choices;
+
+	private State gameState;
+	
+	private Map<int, Player> players; // Map<playerId, Player>
+
+	public void PlayerSubmission(int playerId, Map<Choice, Map<TokenType, int>> decision) {
+		// save the players state 
+		// if its the last player
+		//      update the board 
+		//      notify all players
+		//
+		// should fail if a player submit more than 6 choices
+		// should fail if player didn't use all tokens
+		// should fail if player use tokens he doesntl have
+		// should fail if a player decision is againts resctrictions 
+		// should fail if palyer sumbited in the second time ( before the turn is over)
+		// should fail if the game is over
+	}
+
+	private void turnFinished() {
+		// new token map for each plaer
+		// for each area sum total cubes
+		// for each choice
+		//     decide which player won
+		//     sum player reward to player token map
+		//     sum player reward points 
+		//     if areas sum total < max:
+		//           sum player areas cubes ++
+		//           area sum total cubes ++ 
+		// for each player
+		//    token map should be at least 5 tokens if not add gold
+		// 	check if the game is finished
+	}
+
+	private void notifyPlayers() {
+
+	}
+}
+
+public enum TokenType {
+	Gold,
+	Blackmail,
+	Force;
+}
+
+public enum Choice {
+	Aristocrat,
+	;
+}
+
+public class Player {
+	private int playerId; // ?
+	private int points;
+	private Map<AreaName, int> area_points; // Map< area name, cubes> 
+	private Map<TokenType, int> token;
+	private Map<Choice, Map<TokenType, int>> decisions; //choice-token-how many of eacg
+
+	public void checkAndSetDecision(Map<Choice, Map<TokenType, int>> decisions) {
+		// validate new decision
+		// should fail if a player submit more than 6 decisions
+		// should fail if player didn't use all tokens
+		// should fail if player use tokens he doesntl have
+		// should fail if a player decision is againts resctrictions 
+		
+		// set decision
+	}
+}
+
+public enum AreaName {
+	Cathedral,
+	Market,
+	Travern,
+	TownHall,
+	Harbor,
+	Fortress,
+	Plantation;
+}
+
+public class AreaInfo {
+	private int maxCubes;
+	private int points; // area's value in points
+}
+
+public enum Restriction {
+	NoRestriction,
+	NoBlackmail,
+	NoForce, 
+	Neither; 
+}
+
+public class ChoiceInfo {
+	private List<Reward> rewards;
+	private Restriction restriction;
+}
+
+public enum TypeReward {
+	Gold,
+	Blackmail,
+	Force,
+	Support,
+	Influence;
+} 
+public class Reward {
+	private int howMuch;
+	private TypeReward typeReward;
+	private AreaName areaName;
+}
