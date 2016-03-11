@@ -1,10 +1,16 @@
 package revolution;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChoiceInfo {
 	private List<Reward> rewards;
 	private Restriction restriction;
+	
+	public ChoiceInfo() {
+		rewards = new ArrayList<>();
+		restriction = Restriction.NoRestriction;
+	}
 
 	public List<Reward> getRewards() {
 		return rewards;

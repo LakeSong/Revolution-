@@ -4,6 +4,14 @@ public class Reward {
 	private int howMuch;
 	private RewardType typeReward;
 	private AreaName areaName;
+	
+	
+	public Reward(int howMuch, RewardType typeReward, AreaName areaName) {
+		super();
+		this.howMuch = howMuch;
+		this.typeReward = typeReward;
+		this.areaName = areaName;
+	}
 
 	public int getHowMuch() {
 		return howMuch;

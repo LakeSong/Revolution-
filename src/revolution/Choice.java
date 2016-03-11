@@ -1,5 +1,9 @@
 package revolution;
 
 public enum Choice {
-	Aristocrat;
+	// TODO: set all choices
+	Aristocrat,
+	anansasbasbasbfmasb,
+	asdfsadfsad,
+	sadf;
 }

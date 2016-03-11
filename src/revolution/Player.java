@@ -1,22 +1,35 @@
 package revolution;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
-	private int playerId; // ?
-	private int points;
-	private Map<AreaName, Integer> area_points; // Map< area name, cubes>
+	private int playerId;
+	private int support;
+	private Map<AreaName, Integer> areaPoints; // Map< area name, cubes>
 	private Map<TokenType, Integer> token;
 	private Map<Choice, Map<TokenType, Integer>> decisions; // choice-token-how
-															// many of eacg
-
+															// many of each
+	
+	public Player(int playerId) {
+		this.playerId = playerId;
+		support = 0;
+		areaPoints = new HashMap<>();
+		token = new HashMap<>();
+		token.put(TokenType.Gold, 3);
+		token.put(TokenType.Force, 1);
+		token.put(TokenType.Blackmail, 1);
+		decisions = null;
+	}
+	
 	public void checkAndSetDecision(
 			Map<Choice, Map<TokenType, Integer>> decisions) {
+		//TODO: check and set deciosion 
 		// validate new decision
 		// should fail if a player submit more than 6 decisions
 		// should fail if player didn't use all tokens
-		// should fail if player use tokens he doesntl have
-		// should fail if a player decision is againts resctrictions
+		// should fail if player use tokens he doesn't have
+		// should fail if a player decision is against restrictions
 
 		// set decision
 	}
@@ -28,21 +41,13 @@ public class Player {
 	public void setPlayerId(int playerId) {
 		this.playerId = playerId;
 	}
-
-	public int getPoints() {
-		return points;
+	
+	public Map<AreaName, Integer> getAreaPoints() {
+		return areaPoints;
 	}
 
-	public void setPoints(int points) {
-		this.points = points;
-	}
-
-	public Map<AreaName, Integer> getArea_points() {
-		return area_points;
-	}
-
-	public void setArea_points(Map<AreaName, Integer> area_points) {
-		this.area_points = area_points;
+	public void setAreaPoints(Map<AreaName, Integer> areaPoints) {
+		this.areaPoints = areaPoints;
 	}
 
 	public Map<TokenType, Integer> getToken() {
@@ -61,16 +66,25 @@ public class Player {
 		this.decisions = decisions;
 	}
 
+	public int getSupport() {
+		return support;
+	}
+
+	public void setSupport(int support) {
+		this.support = support;
+	}
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((area_points == null) ? 0 : area_points.hashCode());
+				+ ((areaPoints == null) ? 0 : areaPoints.hashCode());
 		result = prime * result
 				+ ((decisions == null) ? 0 : decisions.hashCode());
 		result = prime * result + playerId;
-		result = prime * result + points;
+		result = prime * result + support;
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		return result;
 	}
@@ -84,10 +98,10 @@ public class Player {
 		if (!(obj instanceof Player))
 			return false;
 		Player other = (Player) obj;
-		if (area_points == null) {
-			if (other.area_points != null)
+		if (areaPoints == null) {
+			if (other.areaPoints != null)
 				return false;
-		} else if (!area_points.equals(other.area_points))
+		} else if (!areaPoints.equals(other.areaPoints))
 			return false;
 		if (decisions == null) {
 			if (other.decisions != null)
@@ -96,7 +110,7 @@ public class Player {
 			return false;
 		if (playerId != other.playerId)
 			return false;
-		if (points != other.points)
+		if (support != other.support)
 			return false;
 		if (token == null) {
 			if (other.token != null)
@@ -108,8 +122,8 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return "Player [playerId=" + playerId + ", points=" + points
-				+ ", area_points=" + area_points + ", token=" + token
+		return "Player [playerId=" + playerId + ", points=" + support
+				+ ", area_points=" + areaPoints + ", token=" + token
 				+ ", decisions=" + decisions + "]";
 	}
 

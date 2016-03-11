@@ -1,8 +1,18 @@
 package revolution;
 
+import java.util.Random;
+
 public class AreaInfo {
 	private int maxCubes;
+	private int currentCubes;
 	private int points; // area's value in points
+	
+	public AreaInfo() {
+		Random randomNum = new Random();
+		currentCubes = 0;
+		points = randomNum.nextInt(30)+20;//random;
+		maxCubes = randomNum.nextInt(4)+5; // random 
+	}
 
 	public int getMaxCubes() {
 		return maxCubes;
@@ -10,6 +20,14 @@ public class AreaInfo {
 
 	public void setMaxCubes(int maxCubes) {
 		this.maxCubes = maxCubes;
+	}
+	
+	public int getCurrentCubes() {
+		return currentCubes;
+	}
+
+	public void setCurrentCubes(int currentCubes) {
+		this.currentCubes = currentCubes;
 	}
 
 	public int getPoints() {
