@@ -24,7 +24,7 @@ public class Player {
 	
 	public void checkAndSetDecision(
 			Map<Choice, Map<TokenType, Integer>> decisions) {
-		//TODO: check and set deciosion 
+		//TODO: check and set deciosion
 		// validate new decision
 		// should fail if a player submit more than 6 decisions
 		// should fail if player didn't use all tokens

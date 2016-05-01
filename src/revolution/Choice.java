@@ -1,9 +1,16 @@
 package revolution;
 
 public enum Choice {
-	// TODO: set all choices
 	Aristocrat,
-	anansasbasbasbfmasb,
-	asdfsadfsad,
-	sadf;
+	General,
+	Captain,
+	Innkeeper,
+	Magistrate,
+	Priest,
+	Merchant,
+	Printer,
+	Rogue,
+	Spy,
+	Apothecary,
+	Mercenary;
 }
