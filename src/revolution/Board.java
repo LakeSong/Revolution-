@@ -1,5 +1,6 @@
 package revolution;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,7 +34,149 @@ public class Board {
 	
 	private void initChoices() {
 		// TODO: define one nby one
+		ChoiceInfo aristocratChoiceInfo = new ChoiceInfo();
+		Restriction restriction = Restriction.NoRestriction;
+		aristocratChoiceInfo.setRestriction(restriction);
+		List<Reward> rewards = new ArrayList<Reward>();
+		Reward reward = new Reward(5, RewardType.Support, null);
+		Reward reward1 = new Reward(3, RewardType.Gold, null);
+		Reward reward2 = new Reward(1, RewardType.Influence , AreaName.Plantation);
+		rewards.add(reward);
+		rewards.add(reward1);
+		rewards.add(reward2);
 		
+		aristocratChoiceInfo.setRewards(rewards);
+		
+		choices.put(Choice.Aristocrat, aristocratChoiceInfo);
+		
+		ChoiceInfo captainChoiceInfo = new ChoiceInfo();
+		Restriction capRestriction = Restriction.NoForce;
+		captainChoiceInfo.setRestriction(capRestriction);
+		List<Reward> capRewards = new ArrayList<Reward>();
+		Reward capReward = new Reward(1, RewardType.Support, null);
+		Reward capReward1 = new Reward(1, RewardType.Force, null);
+		Reward capReward2 = new Reward(1, RewardType.Influence, AreaName.Fortress);
+		rewards.add(capReward);
+		rewards.add(capReward1);
+		rewards.add(capReward2);
+		
+		captainChoiceInfo.setRewards(capRewards);
+		
+		choices.put(Choice.Captain, captainChoiceInfo);
+		
+		ChoiceInfo genChoiceInfo = new ChoiceInfo();
+		Restriction genRestriction = Restriction.NoForce;
+		genChoiceInfo.setRestriction(genRestriction);
+		List<Reward> genRewards = new ArrayList<Reward>();
+		Reward genReward = new Reward(1, RewardType.Support, null);
+		Reward genReward1 = new Reward(1, RewardType.Force, null);
+		Reward genReward2 = new Reward(1, RewardType.Influence, AreaName.Harbor);
+		rewards.add(genReward);
+		rewards.add(genReward1);
+		rewards.add(genReward2);
+		
+		genChoiceInfo.setRewards(genRewards);
+		
+		choices.put(Choice.General, genChoiceInfo);
+		
+		ChoiceInfo InnChoiceInfo = new ChoiceInfo();
+		Restriction InnRestriction = Restriction.NoBlackmail;
+		InnChoiceInfo.setRestriction(InnRestriction);
+		List<Reward> InnRewards = new ArrayList<Reward>();
+		Reward InnReward = new Reward(3, RewardType.Support, null);
+		Reward InnReward1 = new Reward(1, RewardType.Blackmail, null);
+		Reward InnReward2 = new Reward(1, RewardType.Influence, AreaName.Tavern);
+		rewards.add(InnReward);
+		rewards.add(InnReward1);
+		rewards.add(InnReward2);
+		
+		InnChoiceInfo.setRewards(InnRewards);
+		
+		choices.put(Choice.Innkeeper, InnChoiceInfo);
+		
+		
+		ChoiceInfo magChoiceInfo = new ChoiceInfo();
+		Restriction magRestriction = Restriction.NoBlackmail;
+		magChoiceInfo.setRestriction(magRestriction);
+		List<Reward> magRewards = new ArrayList<Reward>();
+		Reward magReward = new Reward(1, RewardType.Support, null);
+		Reward magReward1 = new Reward(1, RewardType.Blackmail, null);
+		Reward magReward2 = new Reward(1, RewardType.Influence, AreaName.TownHall);
+		rewards.add(magReward);
+		rewards.add(magReward1);
+		rewards.add(magReward2);
+		
+		magChoiceInfo.setRewards(magRewards);
+		
+		choices.put(Choice.Magistrate, magChoiceInfo);
+		
+		
+		ChoiceInfo prChoiceInfo = new ChoiceInfo();
+		Restriction prRestriction = Restriction.NoRestriction;
+		prChoiceInfo.setRestriction(prRestriction);
+		List<Reward> prRewards = new ArrayList<Reward>();
+		Reward prReward = new Reward(6, RewardType.Support, null);
+		Reward prReward1 = new Reward(1, RewardType.Influence, AreaName.Cathedral);
+		rewards.add(prReward);
+		rewards.add(prReward1);
+		
+		prChoiceInfo.setRewards(prRewards);
+		
+		choices.put(Choice.Priest, prChoiceInfo);
+		
+		
+		ChoiceInfo merChoiceInfo = new ChoiceInfo();
+		Restriction merRestriction = Restriction.NoRestriction;
+		merChoiceInfo.setRestriction(merRestriction);
+		List<Reward> merRewards = new ArrayList<Reward>();
+		Reward merReward = new Reward(3, RewardType.Support, null);
+		Reward merReward1 = new Reward(5, RewardType.Gold, null);
+		Reward merReward2 = new Reward(1, RewardType.Influence, AreaName.Market);
+		rewards.add(merReward);
+		rewards.add(merReward1);
+		rewards.add(merReward2);
+		
+		merChoiceInfo.setRewards(merRewards);
+		
+		choices.put(Choice.Merchant, merChoiceInfo);
+		
+		
+		ChoiceInfo printerChoiceInfo = new ChoiceInfo();
+		Restriction printerRestriction = Restriction.NoRestriction;
+		printerChoiceInfo.setRestriction(printerRestriction);
+		List<Reward> printerRewards = new ArrayList<Reward>();
+		Reward printerReward = new Reward(10, RewardType.Support, null);
+		rewards.add(printerReward);
+
+		printerChoiceInfo.setRewards(printerRewards);
+		
+		choices.put(Choice.Printer, printerChoiceInfo);
+		
+		
+		ChoiceInfo rogChoiceInfo = new ChoiceInfo();
+		Restriction rogRestriction = Restriction.Neither;
+		rogChoiceInfo.setRestriction(rogRestriction);
+		List<Reward> rogRewards = new ArrayList<Reward>();
+		Reward rogReward = new Reward(2, RewardType.Blackmail, null);
+		rewards.add(rogReward);
+
+		rogChoiceInfo.setRewards(rogRewards);
+		
+		choices.put(Choice.Rogue, rogChoiceInfo);
+		
+		
+		ChoiceInfo mercChoiceInfo = new ChoiceInfo();
+		Restriction mercRestriction = Restriction.Neither;
+		mercChoiceInfo.setRestriction(mercRestriction);
+		List<Reward> mercRewards = new ArrayList<Reward>();
+		Reward mercReward = new Reward(3, RewardType.Support, null);
+		Reward mercReward1 = new Reward(1, RewardType.Force, null);
+		rewards.add(mercReward);
+		rewards.add(mercReward1);
+		
+		mercChoiceInfo.setRewards(mercRewards);
+		
+		choices.put(Choice.Mercenary, mercChoiceInfo);
 		
 	}
 	

@@ -10,7 +10,5 @@ public enum Choice {
 	Merchant,
 	Printer,
 	Rogue,
-	Spy,
-	Apothecary,
 	Mercenary;
 }

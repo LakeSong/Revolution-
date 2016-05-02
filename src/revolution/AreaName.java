@@ -3,7 +3,7 @@ package revolution;
 public enum AreaName {
 	Cathedral,
 	Market,
-	Travern,
+	Tavern,
 	TownHall,
 	Harbor,
 	Fortress,
