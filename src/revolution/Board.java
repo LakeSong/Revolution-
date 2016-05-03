@@ -195,7 +195,7 @@ public class Board {
 		if (player == null)
 			throw new RevolutionGameException("Player not found");
 
-		player.checkAndSetDecision(decision);
+		player.checkAndSetDecision(decision, choices);
 		
 		if (lastPlayer()) {
 			turnFinished();

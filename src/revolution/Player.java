@@ -25,7 +25,7 @@ public class Player {
 	}
 
 	public void checkAndSetDecision(
-			Map<Choice, Map<TokenType, Integer>> decisions) {
+			Map<Choice, Map<TokenType, Integer>> decisions, Map<Choice, ChoiceInfo> choices) {
 		//TODO: check and set decision
 		// validate new decision
 		// should fail if a player submit more than 6 decisions
@@ -55,12 +55,13 @@ public class Player {
 		Restriction restriction;//need to check how to get choice info with choice name
 		ChoiceInfo ch = new ChoiceInfo();
 		for(Choice c : decisions.keySet()){
+			ch = choices.get(c);
 			restriction = ch.getRestriction();
-			if((restriction.toString().equals("NoBlackmail") && arrSum[TokenType.Blackmail.ordinal()]!=0) ||
-				(restriction.toString().equals("NoForce") && arrSum[TokenType.Force.ordinal()]!=0) ||
+			if((restriction.toString().equals("NoBlackmail") && decisions.get(c).containsKey(TokenType.Blackmail)) ||
+				(restriction.toString().equals("NoForce") && decisions.get(c).containsKey(TokenType.Force)) ||
 				(restriction.toString().equals("Neither") && 
-				(arrSum[TokenType.Blackmail.ordinal()]!=0 || arrSum[TokenType.Force.ordinal()]!=0))){
-					;//should fail
+				(decisions.get(c).containsKey(TokenType.Force) || decisions.get(c).containsKey(TokenType.Blackmail)))){
+					;//should fail because it's against restrictions
 			}
 		}
 		
