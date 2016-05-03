@@ -1,9 +1,7 @@
 package revolution;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Collections;
 
 public class Player {
 	private int playerId;
@@ -11,7 +9,7 @@ public class Player {
 	private Map<AreaName, Integer> areaPoints; // Map< area name, cubes>
 	private Map<TokenType, Integer> token;
 	private Map<Choice, Map<TokenType, Integer>> decisions; // choice-token-how
-	private Map<TokenType, Integer>	innerMap;													// many of each
+															// many of each
 	
 	public Player(int playerId) {
 		this.playerId = playerId;
@@ -22,54 +20,17 @@ public class Player {
 		token.put(TokenType.Force, 1);
 		token.put(TokenType.Blackmail, 1);
 		decisions = null;
-		innerMap = null;
 	}
-
+	
 	public void checkAndSetDecision(
 			Map<Choice, Map<TokenType, Integer>> decisions) {
-		//TODO: check and set decision
+		//TODO: check and set deciosion
 		// validate new decision
 		// should fail if a player submit more than 6 decisions
 		// should fail if player didn't use all tokens
 		// should fail if player use tokens he doesn't have
 		// should fail if a player decision is against restrictions
-		if(decisions.size() > 6)
-			;//fail
-		
-		int sum = 0;
-		for (int v : token.values())
-		    sum += v;
-		
-		Map<TokenType, Integer> m = (Map<TokenType, Integer>) decisions.values();
-		int sumD = 0;
-		for(int d : m.values())
-			sumD +=d;
-		
-		if(sumD != sum)
-			; //fail
-		
-		//check if player used all tokens by the rules
-		int[] arrSum = {0,0,0};
-		for(Choice a : decisions.keySet()){
-			for(TokenType t : innerMap.keySet()){
-				arrSum[t.ordinal()] += decisions.get(a).get(t);//counts how many tokens players used of each type
-			}
-		}
-		
-		
-		
-		
-		//need to count how many tokens he used of each and make sure it's the same amount as in tokens map
-		for(TokenType t : m.keySet()){
-			int valD = token.get(t);
-			for(TokenType r : token.keySet()){
-				int val = token.get(r);
-				if(t == r && val < valD)
-					;//fail
-			}
-		}
-			
-		
+
 		// set decision
 	}
 
