@@ -57,16 +57,46 @@ public class Player {
 		for(Choice c : decisions.keySet()){
 			ch = choices.get(c);
 			restriction = ch.getRestriction();
-			if((restriction.toString().equals("NoBlackmail") && decisions.get(c).containsKey(TokenType.Blackmail)) ||
+			boolean flag = isValid(c, restriction);
+			/*if((restriction.toString().equals("NoBlackmail") && decisions.get(c).containsKey(TokenType.Blackmail)) ||
 				(restriction.toString().equals("NoForce") && decisions.get(c).containsKey(TokenType.Force)) ||
 				(restriction.toString().equals("Neither") && 
 				(decisions.get(c).containsKey(TokenType.Force) || decisions.get(c).containsKey(TokenType.Blackmail)))){
-					;//should fail because it's against restrictions
-			}
+					;//should fail because decision is against restrictions
+			}*/
+			if(!flag)
+				;//should fail because decision is against restrictions
 		}
 		
 		this.decisions = decisions;
 		// set decision
+	}
+
+	private boolean isValid(Choice c, Restriction restriction) {
+		// TODO Auto-generated method stub
+		
+		int res = restriction.ordinal();
+		switch (res) {
+		case 0:{
+			return true;
+			}
+		case 1:{
+			if(decisions.get(c).containsKey(TokenType.Blackmail))
+				return false;
+			break;}
+		case 2:{
+			if(decisions.get(c).containsKey(TokenType.Force))
+				return false;
+			break;}		
+		case 3:{
+			if(decisions.get(c).containsKey(TokenType.Blackmail) || decisions.get(c).containsKey(TokenType.Force))
+				return false;
+			break;}
+		default:
+			break;
+		}
+		
+		return false;
 	}
 
 	public int getPlayerId() {
