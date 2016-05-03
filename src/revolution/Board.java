@@ -317,5 +317,9 @@ public class Board {
 		// TODO: notify players - wiat for niv
 	}
 
+	protected Map<Integer, Player> getPlayers() {
+		return players;		
+	}
+
 }
 

@@ -25,7 +25,10 @@ public class Player {
 	}
 
 	public void checkAndSetDecision(
-			Map<Choice, Map<TokenType, Integer>> decisions, Map<Choice, ChoiceInfo> choices) {
+			Map<Choice, Map<TokenType, Integer>> decisions, Map<Choice, ChoiceInfo> choices) throws BadPlayerDecision {
+		if (choices == null || decisions == null) {
+			throw new BadPlayerDecision("Empty decisions");
+		}
 		//TODO: check and set decision
 		// validate new decision
 		// should fail if a player submit more than 6 decisions
