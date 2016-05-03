@@ -56,7 +56,11 @@ public class Player {
 			}
 		}
 		
-		
+		int i = 0;
+		for(Integer tk : token.values()){
+			if(tk != arrSum[i])
+				;//should fail because not same amount 
+		}
 		
 		
 		//need to count how many tokens he used of each and make sure it's the same amount as in tokens map
