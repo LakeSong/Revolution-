@@ -11,7 +11,7 @@ public class Player {
 	private Map<AreaName, Integer> areaPoints; // Map< area name, cubes>
 	private Map<TokenType, Integer> token;
 	private Map<Choice, Map<TokenType, Integer>> decisions; // choice-token-how
-	private Map<TokenType, Integer>	innerMap;													// many of each
+															// many of each
 	
 	public Player(int playerId) {
 		this.playerId = playerId;
@@ -22,7 +22,6 @@ public class Player {
 		token.put(TokenType.Force, 1);
 		token.put(TokenType.Blackmail, 1);
 		decisions = null;
-		innerMap = null;
 	}
 
 	public void checkAndSetDecision(
@@ -33,25 +32,15 @@ public class Player {
 		// should fail if player didn't use all tokens
 		// should fail if player use tokens he doesn't have
 		// should fail if a player decision is against restrictions
+		
 		if(decisions.size() > 6)
-			;//fail
+			;//should fail because player made more than 6 decisions
 		
-		int sum = 0;
-		for (int v : token.values())
-		    sum += v;
 		
-		Map<TokenType, Integer> m = (Map<TokenType, Integer>) decisions.values();
-		int sumD = 0;
-		for(int d : m.values())
-			sumD +=d;
-		
-		if(sumD != sum)
-			; //fail
-		
-		//check if player used all tokens by the rules
+		//counts the amount of each token that the player used
 		int[] arrSum = {0,0,0};
 		for(Choice a : decisions.keySet()){
-			for(TokenType t : innerMap.keySet()){
+			for(TokenType t : decisions.get(a).keySet()){
 				arrSum[t.ordinal()] += decisions.get(a).get(t);//counts how many tokens players used of each type
 			}
 		}
@@ -59,21 +48,23 @@ public class Player {
 		int i = 0;
 		for(Integer tk : token.values()){
 			if(tk != arrSum[i])
-				;//should fail because not same amount 
+				;//should fail if not same amount as player had at the beginning of the round
 		}
 		
 		
-		//need to count how many tokens he used of each and make sure it's the same amount as in tokens map
-		for(TokenType t : m.keySet()){
-			int valD = token.get(t);
-			for(TokenType r : token.keySet()){
-				int val = token.get(r);
-				if(t == r && val < valD)
-					;//fail
+		Restriction restriction;//need to check how to get choice info with choice name
+		ChoiceInfo ch = new ChoiceInfo();
+		for(Choice c : decisions.keySet()){
+			restriction = ch.getRestriction();
+			if((restriction.toString().equals("NoBlackmail") && arrSum[TokenType.Blackmail.ordinal()]!=0) ||
+				(restriction.toString().equals("NoForce") && arrSum[TokenType.Force.ordinal()]!=0) ||
+				(restriction.toString().equals("Neither") && 
+				(arrSum[TokenType.Blackmail.ordinal()]!=0 || arrSum[TokenType.Force.ordinal()]!=0))){
+					;//should fail
 			}
 		}
-			
 		
+		this.decisions = decisions;
 		// set decision
 	}
 

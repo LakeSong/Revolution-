@@ -12,6 +12,7 @@ public class ChoiceInfo {
 		restriction = Restriction.NoRestriction;
 	}
 
+
 	public List<Reward> getRewards() {
 		return rewards;
 	}
@@ -62,5 +63,7 @@ public class ChoiceInfo {
 		return "ChoiceInfo [rewards=" + rewards + ", restriction="
 				+ restriction + "]";
 	}
+
+
 
 }
