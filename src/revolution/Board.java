@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
 	private static final int minimumTokens = 5;
@@ -27,11 +28,11 @@ public class Board {
 		choices = new HashMap<Choice, ChoiceInfo>();
 		initChoices();		
 		
-		
 		gameState = State.Inprogress;
 		players = new HashMap<Integer, Player>();
 	}
 	
+
 	private void initChoices() {
 		// TODO: define one nby one
 		ChoiceInfo aristocratChoiceInfo = new ChoiceInfo();
@@ -56,9 +57,9 @@ public class Board {
 		Reward capReward = new Reward(1, RewardType.Support, null);
 		Reward capReward1 = new Reward(1, RewardType.Force, null);
 		Reward capReward2 = new Reward(1, RewardType.Influence, AreaName.Fortress);
-		rewards.add(capReward);
-		rewards.add(capReward1);
-		rewards.add(capReward2);
+		capRewards.add(capReward);
+		capRewards.add(capReward1);
+		capRewards.add(capReward2);
 		
 		captainChoiceInfo.setRewards(capRewards);
 		
@@ -71,9 +72,9 @@ public class Board {
 		Reward genReward = new Reward(1, RewardType.Support, null);
 		Reward genReward1 = new Reward(1, RewardType.Force, null);
 		Reward genReward2 = new Reward(1, RewardType.Influence, AreaName.Harbor);
-		rewards.add(genReward);
-		rewards.add(genReward1);
-		rewards.add(genReward2);
+		genRewards.add(genReward);
+		genRewards.add(genReward1);
+		genRewards.add(genReward2);
 		
 		genChoiceInfo.setRewards(genRewards);
 		
@@ -86,9 +87,9 @@ public class Board {
 		Reward InnReward = new Reward(3, RewardType.Support, null);
 		Reward InnReward1 = new Reward(1, RewardType.Blackmail, null);
 		Reward InnReward2 = new Reward(1, RewardType.Influence, AreaName.Tavern);
-		rewards.add(InnReward);
-		rewards.add(InnReward1);
-		rewards.add(InnReward2);
+		InnRewards.add(InnReward);
+		InnRewards.add(InnReward1);
+		InnRewards.add(InnReward2);
 		
 		InnChoiceInfo.setRewards(InnRewards);
 		
@@ -102,9 +103,9 @@ public class Board {
 		Reward magReward = new Reward(1, RewardType.Support, null);
 		Reward magReward1 = new Reward(1, RewardType.Blackmail, null);
 		Reward magReward2 = new Reward(1, RewardType.Influence, AreaName.TownHall);
-		rewards.add(magReward);
-		rewards.add(magReward1);
-		rewards.add(magReward2);
+		magRewards.add(magReward);
+		magRewards.add(magReward1);
+		magRewards.add(magReward2);
 		
 		magChoiceInfo.setRewards(magRewards);
 		
@@ -117,8 +118,8 @@ public class Board {
 		List<Reward> prRewards = new ArrayList<Reward>();
 		Reward prReward = new Reward(6, RewardType.Support, null);
 		Reward prReward1 = new Reward(1, RewardType.Influence, AreaName.Cathedral);
-		rewards.add(prReward);
-		rewards.add(prReward1);
+		prRewards.add(prReward);
+		prRewards.add(prReward1);
 		
 		prChoiceInfo.setRewards(prRewards);
 		
@@ -132,9 +133,9 @@ public class Board {
 		Reward merReward = new Reward(3, RewardType.Support, null);
 		Reward merReward1 = new Reward(5, RewardType.Gold, null);
 		Reward merReward2 = new Reward(1, RewardType.Influence, AreaName.Market);
-		rewards.add(merReward);
-		rewards.add(merReward1);
-		rewards.add(merReward2);
+		merRewards.add(merReward);
+		merRewards.add(merReward1);
+		merRewards.add(merReward2);
 		
 		merChoiceInfo.setRewards(merRewards);
 		
@@ -146,7 +147,7 @@ public class Board {
 		printerChoiceInfo.setRestriction(printerRestriction);
 		List<Reward> printerRewards = new ArrayList<Reward>();
 		Reward printerReward = new Reward(10, RewardType.Support, null);
-		rewards.add(printerReward);
+		printerRewards.add(printerReward);
 
 		printerChoiceInfo.setRewards(printerRewards);
 		
@@ -158,7 +159,7 @@ public class Board {
 		rogChoiceInfo.setRestriction(rogRestriction);
 		List<Reward> rogRewards = new ArrayList<Reward>();
 		Reward rogReward = new Reward(2, RewardType.Blackmail, null);
-		rewards.add(rogReward);
+		rogRewards.add(rogReward);
 
 		rogChoiceInfo.setRewards(rogRewards);
 		
@@ -171,8 +172,8 @@ public class Board {
 		List<Reward> mercRewards = new ArrayList<Reward>();
 		Reward mercReward = new Reward(3, RewardType.Support, null);
 		Reward mercReward1 = new Reward(1, RewardType.Force, null);
-		rewards.add(mercReward);
-		rewards.add(mercReward1);
+		mercRewards.add(mercReward);
+		mercRewards.add(mercReward1);
 		
 		mercChoiceInfo.setRewards(mercRewards);
 		
@@ -184,7 +185,7 @@ public class Board {
 		players.put(playerId,  new Player(playerId));
 	}
 
-	public void PlayerSubmission(int playerId, Map<Choice, Map<TokenType, Integer>> decision) throws RevolutionGameException {
+	public void PlayerSubmission(int playerId, Map<Choice, HashMap<TokenType, Integer>> decision) throws RevolutionGameException {
 
 		if(gameState == State.Finished) {
 			throw new RevolutionGameException("Game already finished");
@@ -224,7 +225,7 @@ public class Board {
 		 	check if the game is finished
 	 * @throws RevolutionGameException 
 	 */
-	private void turnFinished() throws RevolutionGameException {
+	public void turnFinished() throws RevolutionGameException {
 		 // new token map for each player		
 		for(Player player : players.values()) {
 			player.setToken(new HashMap<TokenType, Integer>());
@@ -291,11 +292,13 @@ public class Board {
 
 	private void incrementInfluence(Player player, Reward reward) {
 		AreaName areaName = reward.getAreaName();
-		AreaInfo areaInfo = areas.get(areaName);		
-		if(areaInfo.getMaxCubes() > areaInfo.getCurrentCubes()) {
-				Map<AreaName, Integer> playerAreaPoints = player.getAreaPoints();
-				playerAreaPoints.put(areaName, playerAreaPoints.get(areaName)+1);
-				areaInfo.setCurrentCubes(areaInfo.getCurrentCubes() + 1 );
+		if(areaName != null){
+			AreaInfo areaInfo = areas.get(areaName);		
+			if(areaInfo.getMaxCubes() > areaInfo.getCurrentCubes()) {
+					Map<AreaName, Integer> playerAreaPoints = player.getAreaPoints();
+					playerAreaPoints.put(areaName, playerAreaPoints.get(areaName)+1);
+					areaInfo.setCurrentCubes(areaInfo.getCurrentCubes() + 1 );
+			}
 		}
 	}
 
@@ -309,8 +312,53 @@ public class Board {
 	}
 
 	private Integer checkWinner(Choice choice) {
+		// TODO need to create checkWinner function
+		Map<Integer, HashMap<TokenType, Integer>> count = new HashMap<Integer, HashMap<TokenType, Integer>>();
+		Map<Choice, HashMap<TokenType, Integer>> decisions = new HashMap<Choice, HashMap<TokenType, Integer>>();
+		HashMap<TokenType, Integer> token = new HashMap<TokenType, Integer>();
+		for (Player player : players.values()) {
+			decisions = player.getDecisions();
+			for (Choice c : decisions.keySet()){
+				if(c == choice){
+					count.put(player.getPlayerId(), decisions.get(c));
+				}
+				
+			}
+			
+		}
+		int curr=0;
+		int max = 0;
+		//int prevToken = 1;
+		Integer winner = null;
+		for (Integer id : count.keySet()) {
+			for (TokenType tk : count.get(id).keySet()){
+				curr += (calcToken(tk) * count.get(id).get(tk));
+				if(curr > max){
+					max = curr;
+					winner = id;
+				}
+			}
+		}
+		
+		return winner;
+	}
+
+	private int calcToken(TokenType tk) {
 		// TODO Auto-generated method stub
-		return null;
+		switch (tk) {
+		case Gold:{
+			return 1;
+			}
+		case Blackmail:{
+				return 2;
+			}
+		case Force:{
+				return 3;
+			}		
+		default:
+			return 0;
+		}
+		
 	}
 
 	private void notifyPlayers() {
@@ -319,6 +367,10 @@ public class Board {
 
 	protected Map<Integer, Player> getPlayers() {
 		return players;		
+	}
+	
+	protected Map<Choice,ChoiceInfo> getChoices() {
+		return choices;		
 	}
 
 }
