@@ -4,10 +4,13 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.Test;
+
 import revolution.entities.*;
 import revolution.exceptions.*;
 import revolution.enums.*;
@@ -161,11 +164,14 @@ public class BoardTest {
 		board.PlayerSubmission(3, decision3);
 
 		
+		Collection<Entry<AreaName, AreaInfo>> area = board.getGameData().getAreas().entrySet();
+		System.out.println(area);
+		
 		players = board.getPlayers();
 		player1 = players.get(1);
 		player2 = players.get(2);
 		player3=players.get(3);
-
+		
 		System.out.println(player1);
 		System.out.println(player2);
 		System.out.println(player3);
