@@ -5,6 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
 
+
+
+
+
+
+
+
+import revolution.entities.ChoiceInfo;
+import revolution.enums.AreaName;
+import revolution.enums.Choice;
+import revolution.enums.Restriction;
+import revolution.enums.TokenType;
+import revolution.exceptions.BadPlayerDecision;
 import sun.rmi.transport.proxy.CGIHandler;
 
 public class Player {
@@ -60,8 +73,8 @@ public class Player {
 		}
 		
 		
-		int i = 0;
-		for(; i<3; i++){
+		
+		for(int i = 0; i<3; i++){
 			if(arrToken[i] != arrSum[i])
 				throw new BadPlayerDecision("Used incorrect amount of tokens where i=" + i +"arrToken[i]= " + arrToken[i]+ "arrSum[i]= "+ arrSum[i]);
 			//should fail if not same amount as player had at the beginning of the round
@@ -74,10 +87,13 @@ public class Player {
 			ch = choices.get(c);
 			restriction = ch.getRestriction();
 			//boolean flag = isValid(c, restriction);
-			if((restriction.toString().equals("NoBlackmail") && decision.get(c).containsKey(TokenType.Blackmail)) ||
-				(restriction.toString().equals("NoForce") && decision.get(c).containsKey(TokenType.Force)) ||
+			if((restriction.toString().equals("NoBlackmail") && decision.get(c).containsKey(TokenType.Blackmail) 
+				&& decision.get(c).get(TokenType.Blackmail)!=0 ||
+				(restriction.toString().equals("NoForce") && decision.get(c).containsKey(TokenType.Force) 
+				&& decision.get(c).get(TokenType.Force)!=0)||
 				(restriction.toString().equals("Neither") && 
-				(decision.get(c).containsKey(TokenType.Force) || decision.get(c).containsKey(TokenType.Blackmail)))){
+				((decision.get(c).containsKey(TokenType.Force) && decision.get(c).get(TokenType.Force)!=0) 
+						|| (decision.get(c).containsKey(TokenType.Blackmail) && decision.get(c).get(TokenType.Blackmail)!=0))))){
 				throw new BadPlayerDecision("One or more decisions are against restrictions");//;//should fail because decision is against restrictions
 			}
 			//if(!flag)
@@ -104,7 +120,8 @@ public class Player {
 				return false;
 			break;}		
 		case 3:{
-			if(decisions.get(c).containsKey(TokenType.Blackmail) || decisions.get(c).containsKey(TokenType.Force))
+			if(decisions.get(c).containsKey(TokenType.Blackmail) || 
+				decisions.get(c).containsKey(TokenType.Force))
 				return false;
 			break;}
 		default:

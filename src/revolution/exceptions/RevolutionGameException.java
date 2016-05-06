@@ -1,4 +1,4 @@
-package revolution;
+package revolution.exceptions;
 
 @SuppressWarnings("serial")
 public class RevolutionGameException extends Exception {

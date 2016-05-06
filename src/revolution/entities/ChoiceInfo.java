@@ -1,7 +1,9 @@
-package revolution;
+package revolution.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import revolution.enums.Restriction;
 
 public class ChoiceInfo {
 	private List<Reward> rewards;
@@ -10,6 +12,12 @@ public class ChoiceInfo {
 	public ChoiceInfo() {
 		rewards = new ArrayList<>();
 		restriction = Restriction.NoRestriction;
+	}
+	
+	
+	public ChoiceInfo(Restriction restriction) {
+		rewards = new ArrayList<>();
+		this.restriction = restriction;
 	}
 
 
@@ -27,6 +35,11 @@ public class ChoiceInfo {
 
 	public void setRestriction(Restriction restriction) {
 		this.restriction = restriction;
+	}
+	
+	public ChoiceInfo addReward(Reward reward) {
+		this.rewards.add(reward);
+		return this;
 	}
 
 	@Override

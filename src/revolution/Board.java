@@ -6,206 +6,73 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
+
+import revolution.entities.AreaInfo;
+import revolution.entities.ChoiceInfo;
+import revolution.entities.GameData;
+import revolution.entities.Reward;
+import revolution.enums.AreaName;
+import revolution.enums.Choice;
+import revolution.enums.RewardType;
+import revolution.enums.State;
+import revolution.enums.TokenType;
+import revolution.exceptions.RevolutionGameException;
+
 
 public class Board {
 	private static final int minimumTokens = 5;
-
-	private Map<AreaName, AreaInfo> areas;
 	
-	private Map<Choice,ChoiceInfo> choices;
-
-	private State gameState;
-	
-	private Map<Integer, Player> players; // Map<playerId, Player>
+	private GameData gameData;
 
 	
 	public Board() {
-		areas = new HashMap<AreaName, AreaInfo>();
-		for (AreaName areaName : AreaName.values()) {
-			areas.put(areaName, new AreaInfo());
-		}
-		choices = new HashMap<Choice, ChoiceInfo>();
-		initChoices();		
-		
-		gameState = State.Inprogress;
-		players = new HashMap<Integer, Player>();
+		gameData = new GameData();
 	}
 	
 
-	private void initChoices() {
-		// TODO: define one nby one
-		ChoiceInfo aristocratChoiceInfo = new ChoiceInfo();
-		Restriction restriction = Restriction.NoRestriction;
-		aristocratChoiceInfo.setRestriction(restriction);
-		List<Reward> rewards = new ArrayList<Reward>();
-		Reward reward = new Reward(5, RewardType.Support, null);
-		Reward reward1 = new Reward(3, RewardType.Gold, null);
-		Reward reward2 = new Reward(1, RewardType.Influence , AreaName.Plantation);
-		rewards.add(reward);
-		rewards.add(reward1);
-		rewards.add(reward2);
 		
-		aristocratChoiceInfo.setRewards(rewards);
-		
-		choices.put(Choice.Aristocrat, aristocratChoiceInfo);
-		
-		ChoiceInfo captainChoiceInfo = new ChoiceInfo();
-		Restriction capRestriction = Restriction.NoForce;
-		captainChoiceInfo.setRestriction(capRestriction);
-		List<Reward> capRewards = new ArrayList<Reward>();
-		Reward capReward = new Reward(1, RewardType.Support, null);
-		Reward capReward1 = new Reward(1, RewardType.Force, null);
-		Reward capReward2 = new Reward(1, RewardType.Influence, AreaName.Fortress);
-		capRewards.add(capReward);
-		capRewards.add(capReward1);
-		capRewards.add(capReward2);
-		
-		captainChoiceInfo.setRewards(capRewards);
-		
-		choices.put(Choice.Captain, captainChoiceInfo);
-		
-		ChoiceInfo genChoiceInfo = new ChoiceInfo();
-		Restriction genRestriction = Restriction.NoForce;
-		genChoiceInfo.setRestriction(genRestriction);
-		List<Reward> genRewards = new ArrayList<Reward>();
-		Reward genReward = new Reward(1, RewardType.Support, null);
-		Reward genReward1 = new Reward(1, RewardType.Force, null);
-		Reward genReward2 = new Reward(1, RewardType.Influence, AreaName.Harbor);
-		genRewards.add(genReward);
-		genRewards.add(genReward1);
-		genRewards.add(genReward2);
-		
-		genChoiceInfo.setRewards(genRewards);
-		
-		choices.put(Choice.General, genChoiceInfo);
-		
-		ChoiceInfo InnChoiceInfo = new ChoiceInfo();
-		Restriction InnRestriction = Restriction.NoBlackmail;
-		InnChoiceInfo.setRestriction(InnRestriction);
-		List<Reward> InnRewards = new ArrayList<Reward>();
-		Reward InnReward = new Reward(3, RewardType.Support, null);
-		Reward InnReward1 = new Reward(1, RewardType.Blackmail, null);
-		Reward InnReward2 = new Reward(1, RewardType.Influence, AreaName.Tavern);
-		InnRewards.add(InnReward);
-		InnRewards.add(InnReward1);
-		InnRewards.add(InnReward2);
-		
-		InnChoiceInfo.setRewards(InnRewards);
-		
-		choices.put(Choice.Innkeeper, InnChoiceInfo);
-		
-		
-		ChoiceInfo magChoiceInfo = new ChoiceInfo();
-		Restriction magRestriction = Restriction.NoBlackmail;
-		magChoiceInfo.setRestriction(magRestriction);
-		List<Reward> magRewards = new ArrayList<Reward>();
-		Reward magReward = new Reward(1, RewardType.Support, null);
-		Reward magReward1 = new Reward(1, RewardType.Blackmail, null);
-		Reward magReward2 = new Reward(1, RewardType.Influence, AreaName.TownHall);
-		magRewards.add(magReward);
-		magRewards.add(magReward1);
-		magRewards.add(magReward2);
-		
-		magChoiceInfo.setRewards(magRewards);
-		
-		choices.put(Choice.Magistrate, magChoiceInfo);
-		
-		
-		ChoiceInfo prChoiceInfo = new ChoiceInfo();
-		Restriction prRestriction = Restriction.NoRestriction;
-		prChoiceInfo.setRestriction(prRestriction);
-		List<Reward> prRewards = new ArrayList<Reward>();
-		Reward prReward = new Reward(6, RewardType.Support, null);
-		Reward prReward1 = new Reward(1, RewardType.Influence, AreaName.Cathedral);
-		prRewards.add(prReward);
-		prRewards.add(prReward1);
-		
-		prChoiceInfo.setRewards(prRewards);
-		
-		choices.put(Choice.Priest, prChoiceInfo);
-		
-		
-		ChoiceInfo merChoiceInfo = new ChoiceInfo();
-		Restriction merRestriction = Restriction.NoRestriction;
-		merChoiceInfo.setRestriction(merRestriction);
-		List<Reward> merRewards = new ArrayList<Reward>();
-		Reward merReward = new Reward(3, RewardType.Support, null);
-		Reward merReward1 = new Reward(5, RewardType.Gold, null);
-		Reward merReward2 = new Reward(1, RewardType.Influence, AreaName.Market);
-		merRewards.add(merReward);
-		merRewards.add(merReward1);
-		merRewards.add(merReward2);
-		
-		merChoiceInfo.setRewards(merRewards);
-		
-		choices.put(Choice.Merchant, merChoiceInfo);
-		
-		
-		ChoiceInfo printerChoiceInfo = new ChoiceInfo();
-		Restriction printerRestriction = Restriction.NoRestriction;
-		printerChoiceInfo.setRestriction(printerRestriction);
-		List<Reward> printerRewards = new ArrayList<Reward>();
-		Reward printerReward = new Reward(10, RewardType.Support, null);
-		printerRewards.add(printerReward);
-
-		printerChoiceInfo.setRewards(printerRewards);
-		
-		choices.put(Choice.Printer, printerChoiceInfo);
-		
-		
-		ChoiceInfo rogChoiceInfo = new ChoiceInfo();
-		Restriction rogRestriction = Restriction.Neither;
-		rogChoiceInfo.setRestriction(rogRestriction);
-		List<Reward> rogRewards = new ArrayList<Reward>();
-		Reward rogReward = new Reward(2, RewardType.Blackmail, null);
-		rogRewards.add(rogReward);
-
-		rogChoiceInfo.setRewards(rogRewards);
-		
-		choices.put(Choice.Rogue, rogChoiceInfo);
-		
-		
-		ChoiceInfo mercChoiceInfo = new ChoiceInfo();
-		Restriction mercRestriction = Restriction.Neither;
-		mercChoiceInfo.setRestriction(mercRestriction);
-		List<Reward> mercRewards = new ArrayList<Reward>();
-		Reward mercReward = new Reward(3, RewardType.Support, null);
-		Reward mercReward1 = new Reward(1, RewardType.Force, null);
-		mercRewards.add(mercReward);
-		mercRewards.add(mercReward1);
-		
-		mercChoiceInfo.setRewards(mercRewards);
-		
-		choices.put(Choice.Mercenary, mercChoiceInfo);
-		
-	}
-	
 	public void joinGame(int playerId) {
-		players.put(playerId,  new Player(playerId));
+		gameData.getPlayers().put(playerId,  new Player(playerId));
 	}
 
-	public void PlayerSubmission(int playerId, Map<Choice, HashMap<TokenType, Integer>> decision) throws RevolutionGameException {
+	public GameData PlayerSubmission(int playerId, Map<Choice, HashMap<TokenType, Integer>> decision) throws RevolutionGameException {
 
-		if(gameState == State.Finished) {
+		if(gameData.getGameState() == State.Finished) {
 			throw new RevolutionGameException("Game already finished");
 		}
 		
-		Player player = this.players.get(playerId);
+		Player player = gameData.getPlayers().get(playerId);
 		
 		if (player == null)
 			throw new RevolutionGameException("Player not found");
 
-		player.checkAndSetDecision(decision, choices);
+		player.checkAndSetDecision(decision, gameData.getChoices());
 		
 		if (lastPlayer()) {
 			turnFinished();
+			this.gameData.setRound(this.gameData.getRound() + 1);
 			notifyPlayers();
+			
 		}
+		return gameData;
+	}
+	
+	public int submittedPlayers(){
+		int count = 0;
+		for(Player player : gameData.getPlayers().values()){
+			if(player.getDecisions() != null){
+				count++;
+			}
+		}
+		if(count == 0){
+			return count= gameData.getPlayers().size();
+		}
+		return count;
 	}
 
 	private boolean lastPlayer() {
-		for (Player player : players.values()) {
+		for (Player player : gameData.getPlayers().values()) {
 			if (player.getDecisions() == null)
 				return false;
 		}		
@@ -227,11 +94,11 @@ public class Board {
 	 */
 	public void turnFinished() throws RevolutionGameException {
 		 // new token map for each player		
-		for(Player player : players.values()) {
+		for(Player player : gameData.getPlayers().values()) {
 			player.setToken(new HashMap<TokenType, Integer>());
 		}		
 
-		List<Choice> choicesList = new ArrayList<Choice>(choices.keySet());
+		List<Choice> choicesList = new ArrayList<Choice>(gameData.getChoices().keySet());
 		for(Choice choice : choicesList) {
 			Integer player_id = checkWinner(choice);
 			if (player_id == null) {
@@ -239,8 +106,8 @@ public class Board {
 				continue;
 			}
 			//else
-			Player player = players.get(player_id);
-			List<Reward> rewards = this.choices.get(choice).getRewards();			
+			Player player = gameData.getPlayers().get(player_id);
+			List<Reward> rewards = this.gameData.getChoices().get(choice).getRewards();			
 			for (Reward reward : rewards) {
 				switch (reward.getTypeReward()) {	
 					case Gold:
@@ -262,7 +129,7 @@ public class Board {
 		}
 
 		// for each player add minmum 5 tokens		
-		for (Player player : players.values()) {
+		for (Player player : gameData.getPlayers().values()) {
 			Collection<Integer> values = player.getToken().values();
 			int sum = 0;
 			for (Integer value : values) {
@@ -274,15 +141,38 @@ public class Board {
 			player.setDecisions(null);
 		}
 		
+		
 		// check if game finished
 		if (isGameFinish()) {
-			gameState = State.Finished;
+			gameData.setGameState(State.Finished);
+			calcSupport();
+
 		}
 		
 	}
 
-	private boolean isGameFinish() {
-		for (AreaInfo areaInfo : areas.values()) {
+
+	private void calcSupport() {
+		int maxCubes = 0;
+		int currCubes;
+		Integer maxId;
+		for (Entry<AreaName, AreaInfo> area : gameData.getAreas().entrySet()) {
+			for (Entry<Integer, Player> player : gameData.getPlayers().entrySet()) {
+				currCubes = player.getValue().getAreaPoints().get(area.getKey());
+				if(currCubes > maxCubes){
+					maxCubes=currCubes;
+					maxId = player.getKey();
+				}
+				if(maxCubes > area.getValue().getMaxCubes()/2){
+					player.getValue().setSupport(player.getValue().getSupport()+area.getValue().getPoints());
+				}
+			}
+		}
+	}
+
+
+	public boolean isGameFinish() {
+		for (AreaInfo areaInfo : gameData.getAreas().values()) {
 			if(areaInfo.getCurrentCubes() < areaInfo.getMaxCubes())
 				return false;
 		}	
@@ -293,7 +183,7 @@ public class Board {
 	private void incrementInfluence(Player player, Reward reward) {
 		AreaName areaName = reward.getAreaName();
 		if(areaName != null){
-			AreaInfo areaInfo = areas.get(areaName);		
+			AreaInfo areaInfo = gameData.getAreas().get(areaName);		
 			if(areaInfo.getMaxCubes() > areaInfo.getCurrentCubes()) {
 					Map<AreaName, Integer> playerAreaPoints = player.getAreaPoints();
 					playerAreaPoints.put(areaName, playerAreaPoints.get(areaName)+1);
@@ -310,55 +200,58 @@ public class Board {
 		}
 		player.getToken().put(tokenType, tokenAmount + howMuch);		
 	}
+	
+	private int compareTokens(HashMap<TokenType, Integer> token1, HashMap<TokenType, Integer> token2) {
+		if((token1 == null || token1.isEmpty()) && (token2.isEmpty() || token2 == null))
+			return 0;
+		int compare = compareNumbers(token1.get(TokenType.Force), token2.get(TokenType.Force));
+		if(compare != 0)
+			return compare;
+		
+		compare = compareNumbers(token1.get(TokenType.Blackmail), token2.get(TokenType.Blackmail));
+		if(compare != 0)
+			return compare;
+		
+		compare = compareNumbers(token1.get(TokenType.Gold), token2.get(TokenType.Gold));
+		return compare;
+	}
+	
+	private int compareNumbers(Integer num1, Integer num2) {
+		int number1 = num1 != null ? num1.intValue() : 0;
+		int number2 = num2 != null ? num2.intValue() : 0;
+		return number1 - number2;
+	}
+
 
 	private Integer checkWinner(Choice choice) {
 		// TODO need to create checkWinner function
-		Map<Integer, HashMap<TokenType, Integer>> count = new HashMap<Integer, HashMap<TokenType, Integer>>();
-		Map<Choice, HashMap<TokenType, Integer>> decisions = new HashMap<Choice, HashMap<TokenType, Integer>>();
-		HashMap<TokenType, Integer> token = new HashMap<TokenType, Integer>();
-		for (Player player : players.values()) {
-			decisions = player.getDecisions();
-			for (Choice c : decisions.keySet()){
-				if(c == choice){
-					count.put(player.getPlayerId(), decisions.get(c));
-				}
-				
+		HashMap<TokenType, Integer> maxPlayerToken = null;
+		Integer maxPlayerId = null;
+		for (Entry<Integer, Player> playerObject : gameData.getPlayers().entrySet()) {
+			HashMap<TokenType,Integer> playerTokens = playerObject.getValue().getDecisions().get(choice);
+			if (playerTokens == null || playerTokens.isEmpty()) {
+				continue;
+			}
+			if (maxPlayerId == null || compareTokens(maxPlayerToken, playerTokens) < 0) {
+				maxPlayerToken = playerTokens;
+				maxPlayerId = playerObject.getKey();
 			}
 			
 		}
-		int curr=0;
-		int max = 0;
-		//int prevToken = 1;
-		Integer winner = null;
-		for (Integer id : count.keySet()) {
-			for (TokenType tk : count.get(id).keySet()){
-				curr += (calcToken(tk) * count.get(id).get(tk));
-				if(curr > max){
-					max = curr;
-					winner = id;
-				}
-			}
-		}
 		
-		return winner;
-	}
-
-	private int calcToken(TokenType tk) {
-		// TODO Auto-generated method stub
-		switch (tk) {
-		case Gold:{
-			return 1;
+		for (Entry<Integer, Player> playerObject : gameData.getPlayers().entrySet()) {
+			HashMap<TokenType,Integer> playerTokens = playerObject.getValue().getDecisions().get(choice);
+			if (playerTokens == null || playerTokens.isEmpty() || playerObject.getKey() == maxPlayerId) {
+				continue;
 			}
-		case Blackmail:{
-				return 2;
+			if (compareTokens(maxPlayerToken, playerTokens) == 0) {
+				maxPlayerToken = null;
+				maxPlayerId = null;
+				break;
 			}
-		case Force:{
-				return 3;
-			}		
-		default:
-			return 0;
+			
 		}
-		
+		return maxPlayerId;
 	}
 
 	private void notifyPlayers() {
@@ -366,12 +259,19 @@ public class Board {
 	}
 
 	protected Map<Integer, Player> getPlayers() {
-		return players;		
+		return gameData.getPlayers();		
 	}
 	
 	protected Map<Choice,ChoiceInfo> getChoices() {
-		return choices;		
+		return gameData.getChoices();		
 	}
-
+	
+	protected State getGameState() {
+		return gameData.getGameState();		
+	}
+	
+	protected int getRound() {
+		return gameData.getRound();		
+	}
 }
 

@@ -16,6 +16,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import revolution.entities.*;
+import revolution.exceptions.*;
+import revolution.enums.*;
 
 /**
  * @author Shir
@@ -191,7 +194,7 @@ public class PlayerTest {
 		InnChoiceInfo.setRewards(InnRewards);
 		
 		choices.put(Choice.Innkeeper, InnChoiceInfo);
-		
+		//TODO: change decisions from new hashmap
 		
 		decisions.put(Choice.Aristocrat, new HashMap<TokenType, Integer>());
 		decisions.get(Choice.Aristocrat).put(TokenType.Gold, 3);

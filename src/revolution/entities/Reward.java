@@ -1,10 +1,19 @@
-package revolution;
+package revolution.entities;
+
+import revolution.enums.AreaName;
+import revolution.enums.RewardType;
 
 public class Reward {
 	private int howMuch;
 	private RewardType typeReward;
 	private AreaName areaName;
 	
+	public Reward(int howMuch, RewardType typeReward) {
+		super();
+		this.howMuch = howMuch;
+		this.typeReward = typeReward;
+		this.areaName = null;
+	}
 	
 	public Reward(int howMuch, RewardType typeReward, AreaName areaName) {
 		super();

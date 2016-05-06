@@ -1,4 +1,4 @@
-package revolution;
+package revolution.exceptions;
 
 public class BadPlayerDecision extends RevolutionGameException {
 

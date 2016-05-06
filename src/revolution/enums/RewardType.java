@@ -1,4 +1,6 @@
-package revolution;
+package revolution.enums;
+
+import revolution.exceptions.RevolutionGameException;
 
 public enum RewardType {
 	Gold,

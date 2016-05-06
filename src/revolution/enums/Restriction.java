@@ -1,4 +1,4 @@
-package revolution;
+package revolution.enums;
 
 public enum Restriction {
 	NoRestriction,

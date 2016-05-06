@@ -1,4 +1,4 @@
-package revolution;
+package revolution.entities;
 
 import java.util.Random;
 
@@ -11,7 +11,7 @@ public class AreaInfo {
 		Random randomNum = new Random();
 		currentCubes = 0;
 		points = randomNum.nextInt(30)+20;//random;
-		maxCubes = randomNum.nextInt(4)+5; // random 
+		maxCubes = randomNum.nextInt(1)+1;//+5; // random 
 	}
 
 	public int getMaxCubes() {
